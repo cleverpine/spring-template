@@ -1,0 +1,10 @@
+springdoc:
+  swagger-ui:
+    url: /template-api-yml-configuration/template-api.yml
+auth:
+  token:
+    usernamePath: preferred_username
+    rolesPath: resource_access.account.roles
+    ## remove the secret and issuer if working with an API Gateway
+    secret: jwt_secret
+    issuer: issuer_name
