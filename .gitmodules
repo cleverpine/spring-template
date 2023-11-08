@@ -1,0 +1,3 @@
+[submodule "template-service/src/main/resources/static/template-api"]
+	path = template-service/src/main/resources/static/template-api
+	url = git@github.com:cleverpine/template-api.git
