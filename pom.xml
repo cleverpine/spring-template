@@ -77,16 +77,6 @@
             </dependency>
 
             <!--CP dependencies-->
-            <dependency>
-                <groupId>com.cleverpine</groupId>
-                <artifactId>cp-virava-spring-helper</artifactId>
-                <version>3.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.cleverpine</groupId>
-                <artifactId>cp-spring-error-util</artifactId>
-                <version>2.0.0</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
