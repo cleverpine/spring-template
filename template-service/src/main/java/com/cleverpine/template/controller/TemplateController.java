@@ -1,7 +1,5 @@
 package com.cleverpine.template.controller;
 
-import com.cleverpine.cpspringerrorutil.util.ListResponseEntityUtil;
-import com.cleverpine.cpspringerrorutil.util.ResponseEntityUtil;
 import com.cleverpine.template.api.TemplatesApi;
 import com.cleverpine.template.auth.ViravaSecured;
 import com.cleverpine.template.auth.roles.Resources;
@@ -23,26 +21,30 @@ public class TemplateController implements TemplatesApi {
 
     private static final Map<Integer, TemplateFull> templateList = new HashMap<>();
     private static int index = 1;
-    private final ResponseEntityUtil<TemplateResponse, TemplateFull> responseEntityUtil;
-    private final ListResponseEntityUtil<TemplateListResponse, TemplateFull> listResponseEntityUtil;
 
     @Override
     @ViravaSecured(resource = Resources.TEMPLATE, scope = ScopeType.READ)
     public ResponseEntity<TemplateResponse> getTemplate(Integer id) {
-        return responseEntityUtil.ok(templateList.get(id));
+        var response = new TemplateResponse();
+        response.data(templateList.get(id));
+        return ResponseEntity.ok(response);
     }
 
     @Override
     @ViravaSecured(resource = Resources.TEMPLATE, scope = ScopeType.READ)
     public ResponseEntity<TemplateListResponse> getTemplates() {
-        return listResponseEntityUtil.ok(new LinkedList<>(templateList.values()));
+        var response = new TemplateListResponse();
+        response.data(new LinkedList<>(templateList.values()));
+        return ResponseEntity.ok(response);
     }
 
     @Override
     @ViravaSecured(resource = Resources.TEMPLATE, scope = ScopeType.UPDATE)
     public ResponseEntity<TemplateResponse> updateTemplate(Integer id, TemplateFull template) {
-        templateList.put(template.getId(), template);
-        return responseEntityUtil.ok(template);
+        templateList.put(id, template);
+        var response = new TemplateResponse();
+        response.data(template);
+        return ResponseEntity.ok(response);
     }
 
     @Override
@@ -53,13 +55,15 @@ public class TemplateController implements TemplatesApi {
         templateFull.setFoo(template.getFoo());
         templateFull.setId(index++);
         templateList.put(templateFull.getId(), templateFull);
-        return responseEntityUtil.created(templateFull);
+        var response = new TemplateResponse();
+        response.data(templateFull);
+        return ResponseEntity.ok(response);
     }
 
     @Override
     @ViravaSecured(resource = Resources.TEMPLATE, scope = ScopeType.DELETE)
     public ResponseEntity<Void> deleteTemplate(Integer id) {
-        return responseEntityUtil.noContent();
+        return ResponseEntity.noContent().build();
     }
 
 }

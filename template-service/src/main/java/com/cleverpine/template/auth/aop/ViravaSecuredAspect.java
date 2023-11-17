@@ -18,6 +18,6 @@ public class ViravaSecuredAspect extends BaseViravaSecuredAspect {
 
     @Before("@annotation(viravaSecured)")
     public void secure(JoinPoint joinPoint, ViravaSecured viravaSecured) {
-        authorise(joinPoint, viravaSecured.resource(), viravaSecured.scope());
+        authorize(joinPoint, viravaSecured.resource(), viravaSecured.scope());
     }
 }

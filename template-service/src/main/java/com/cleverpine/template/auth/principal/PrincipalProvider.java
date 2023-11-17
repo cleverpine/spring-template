@@ -12,6 +12,7 @@ public class PrincipalProvider extends ViravaPrincipalProvider<UserPrincipal> {
 
     @Override
     public UserPrincipal provideCustomPrincipalInfo(String username) {
-        return null;//TODO
+        // TODO
+        return null;
     }
 }
