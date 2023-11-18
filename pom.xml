@@ -75,7 +75,6 @@
                 <artifactId>logback-classic</artifactId>
                 <version>1.4.5</version>
             </dependency>
-
             <!--CP dependencies-->
             <dependency>
                 <groupId>com.cleverpine</groupId>
