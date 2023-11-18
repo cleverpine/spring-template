@@ -1,7 +1,11 @@
 package com.cleverpine.template.exception.handler;
 
-import com.cleverpine.template.model.ErrorData;
+import com.cleverpine.cpspringerrorutil.handler.BaseGlobalExceptionHandler;
+import com.cleverpine.cpspringerrorutil.mapper.ExceptionTypeMapper;
+import com.cleverpine.cpspringerrorutil.model.ErrorResponseModel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,20 +13,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Slf4j
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends BaseGlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorData> handleException(Exception exception) {
-        log.error(exception.getMessage(), exception);
-        return createErrorResponse(exception, HttpStatus.INTERNAL_SERVER_ERROR);
+    @Autowired
+    public GlobalExceptionHandler(
+            ExceptionTypeMapper exceptionTypeMapper,
+            ExceptionHandlerLogger baseLogger,
+            @Value("${spring.profiles.active:dev}") String activeProfile) {
+        super(exceptionTypeMapper, baseLogger, activeProfile.equals("dev"));
     }
 
-    private ResponseEntity<ErrorData> createErrorResponse(Exception exception, HttpStatus httpStatus) {
-        var errorData = new ErrorData();
-        errorData.setStatus(httpStatus.value());
-        errorData.setTitle(httpStatus.getReasonPhrase());
-        errorData.setDetail(exception.getMessage());
-        return new ResponseEntity<>(errorData, httpStatus);
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponseModel> handleException(Exception e) {
+        log.error(e.getMessage(), e);
+        return createErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
